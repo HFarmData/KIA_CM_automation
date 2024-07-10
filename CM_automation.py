@@ -1,0 +1,78 @@
+import pandas as pd
+from utils import *
+
+pd.options.mode.copy_on_write = True
+
+start_date = "2024-07-09T00:00:00"
+end_date = "2024-07-10T00:00:00"
+
+########### INSTAGRAM ###########
+
+### COMMUNITY INSTAGRAM ###
+print('---Getting data from Emplifi for Instagram Community---')
+ig_community = get_data(date_start=start_date, date_end=end_date, platform='instagram')
+print('Retrieving data from Emplifi for Instagram Community completed')
+
+### DATA PRE-PROCESSING ###
+ig_community.fillna('VUOTO', inplace=True)
+ig_community = ig_community[ig_community['community_type'] != 'post']
+
+### CREATE FINAL DATASET ###
+conversazioni = create_conversations(ig_community, 'instagram')
+conversazioni = conversazioni[conversazioni['data'] >= start_date.split('T')[0]]
+df_final_ig = create_final_df(conversazioni)
+community_ig = before_deadline(df_final_ig, platform='instagram')
+print(community_ig.head())
+
+
+########### FACEBOOK ###########
+
+### COMMUNITY FACEBOOK ###
+print('---Getting data from Emplifi for Facebook Community---')
+fb_community = get_data(date_start=start_date, date_end=end_date, platform='facebook')
+print('Retrieving data from Emplifi for Facebook Community completed')
+
+### DATA PRE-PROCESSING ###
+fb_community.fillna('VUOTO', inplace=True)
+fb_community = fb_community[fb_community['community_type'] != 'post']
+
+### CREATE FINAL DATASET ###
+conversazioni = create_conversations(fb_community, 'facebook')
+conversazioni = conversazioni[conversazioni['data'] >= start_date.split('T')[0]]
+df_final_fb = create_final_df(conversazioni)
+community_fb = before_deadline(df_final_fb, platform='facebook')
+print(community_fb.head())
+
+
+########### GENERATIVE AI ###########
+print('---Generative AI---')
+
+#### INSTAGRAM ####
+community_ig['input ai'] = community_ig.agg(lambda x: f"{x['NOME UTENTE']} ha commentato {x['COMMENTO UTENTE']}", axis=1)
+community_ig['Token Count'] = community_ig.iloc[:,-1].apply(count_token)
+
+total_token = community_ig['Token Count'].sum()
+
+print(f"Total tokens for Instagram Community {total_token}")
+
+community_ig = generate_responses(community_ig)
+
+community_ig.iloc[:,:-2].to_excel(f"out/ig_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
+
+print('Final Dataset of Instagram Community')
+print(community_ig.head())
+
+#### FACEBOOK ####
+community_fb['input ai'] = community_fb.agg(lambda x: f"{x['NOME UTENTE']} ha commentato {x['COMMENTO UTENTE']}", axis=1)
+community_fb['Token Count'] = community_fb.iloc[:,-1].apply(count_token)
+
+total_token = community_fb['Token Count'].sum()
+
+print(f"Total tokens for Facebook Community {total_token}")
+
+community_fb = generate_responses(community_fb)
+
+community_fb.iloc[:,:-2].to_excel(f"out/fb_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
+
+print('Final Dataset of Facebook Community')
+print(community_fb.head())
