@@ -3,8 +3,8 @@ from utils import *
 
 pd.options.mode.copy_on_write = True
 
-start_date = "2024-07-10T00:00:00"
-end_date = "2024-07-11T00:00:00"
+start_date = "2024-07-15T00:00:00"
+end_date = "2024-07-15T23:59:59"
 
 ########### INSTAGRAM ###########
 
@@ -47,7 +47,7 @@ print(community_fb.head())
 ########### GENERATIVE AI ###########
 print('---Generative AI---')
 
-#### INSTAGRAM ####
+"""#### INSTAGRAM ####
 community_ig['input ai'] = community_ig.agg(lambda x: f"{x['NOME UTENTE']} ha commentato {x['COMMENTO UTENTE']}", axis=1)
 community_ig['Token Count'] = community_ig.iloc[:,-1].apply(count_token)
 
@@ -57,10 +57,11 @@ print(f"Total tokens for Instagram Community {total_token}")
 
 community_ig = generate_responses(community_ig)
 
-community_ig.iloc[:,:-2].to_excel(f"out/ig_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
+# community_ig.iloc[:,:-2].to_excel(f"out/ig_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
+community_ig.iloc[:,:-2].to_excel(f"C:/Users/rborgo/Downloads/out kia\ig_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
 
 print('Final Dataset of Instagram Community')
-print(community_ig.head())
+print(community_ig.head())"""
 
 #### FACEBOOK ####
 community_fb['input ai'] = community_fb.agg(lambda x: f"{x['NOME UTENTE']} ha commentato {x['COMMENTO UTENTE']}", axis=1)
@@ -72,7 +73,7 @@ print(f"Total tokens for Facebook Community {total_token}")
 
 community_fb = generate_responses(community_fb)
 
-community_fb.iloc[:,:-2].to_excel(f"out/fb_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
-
+# community_fb.iloc[:,:-2].to_excel(f"out/fb_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
+community_fb.iloc[:,:-2].to_excel(f"C:/Users/rborgo/Downloads/out kia/fb_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
 print('Final Dataset of Facebook Community')
 print(community_fb.head())
