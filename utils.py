@@ -315,8 +315,8 @@ def generate_responses(df_in):
         \n 2. Il numero di telaio è composto da 17 caratteri alfanumerici.
         \n 3. Il nome utente lo trovi prima della parola "ha commentato".
         \n 4. Il concessionario è solitamente vicino al nome di una città.
-        \n 5. Analizza il sentiment del messaggio con "Positivo", "Neutro", "Negativo".
-        \n 6. Ricordati che è possibile che queste informazioni non siano presenti all'interno di alcuni commenti, in questo caso sostituisci i targa, modello, telaio e concessionario con la parola "NO"
+        \n 5. Analizza il sentiment del messaggio con "Positivo", "Neutro", "Negativo". Se trovi un commento simile a "messaggio non disponibile" oppure "storia scaduta" imposta automaticamente il sentiment a "Neutro"
+        \n 6. Ricordati che è possibile che queste informazioni non siano presenti all'interno di alcuni commenti, in questo caso sostituisci targa, modello, telaio e concessionario con la parola "NO"
         \n 7. Analizza tutti i commenti senza tralasciarne nemmeno uno.
         """
     
