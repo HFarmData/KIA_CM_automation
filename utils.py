@@ -62,7 +62,7 @@ def get_data(platform, date_start, date_end):
         
         return community
 
-def create_conversations(df, platform):
+def create_conversations(df, platform, start_date, end_date):
     conversazioni = pd.DataFrame(columns=['nome', 'data', 'ora', 'provenienza', 'label', 'messaggio', 'origine', 'url'])
     messaggi = []
     data = []
@@ -168,6 +168,8 @@ def create_conversations(df, platform):
     conversazioni['url'] = url
     conversazioni['provenienza'] = provenienza
     conversazioni['label'] = label
+
+    conversazioni = conversazioni[(conversazioni['data'] >= start_date.split('T')[0]) & (conversazioni['data'] <= end_date.split('T')[0])]
 
     return conversazioni
 
