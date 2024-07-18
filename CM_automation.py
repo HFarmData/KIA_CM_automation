@@ -18,8 +18,7 @@ ig_community.fillna('VUOTO', inplace=True)
 ig_community = ig_community[ig_community['community_type'] != 'post']
 
 ### CREATE FINAL DATASET ###
-conversazioni = create_conversations(ig_community, 'instagram')
-conversazioni = conversazioni[conversazioni['data'] >= start_date.split('T')[0]]
+conversazioni = create_conversations(ig_community, 'instagram', start_date, end_date)
 df_final_ig = create_final_df(conversazioni)
 community_ig = before_deadline(df_final_ig, platform='instagram')
 print(community_ig.head())
@@ -37,8 +36,7 @@ fb_community.fillna('VUOTO', inplace=True)
 fb_community = fb_community[fb_community['community_type'] != 'post']
 
 ### CREATE FINAL DATASET ###
-conversazioni = create_conversations(fb_community, 'facebook')
-conversazioni = conversazioni[conversazioni['data'] >= start_date.split('T')[0]]
+conversazioni = create_conversations(fb_community, 'facebook', start_date, end_date)
 df_final_fb = create_final_df(conversazioni)
 community_fb = before_deadline(df_final_fb, platform='facebook')
 print(community_fb.head())
