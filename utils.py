@@ -322,16 +322,14 @@ def generate_responses(df_in):
         \n 7. Analizza tutti i commenti senza tralasciarne nemmeno uno.
         """
     
-    message_array = []
-    system = {"role": "system", "content": prompt0}
-    message_array.append(system)
     df_final = pd.DataFrame(columns=['Utente', 'Modello', 'Targa', 'Numero Telaio', 'Concessionario', 'Sentiment'])
 
     for i, el in df_in.iterrows():
-        if i % 10 == 0:
-            print(f'Commento numero {i}')
+        message_array = []
         system = {"role": "system", "content": prompt0}
         message_array.append(system)
+        if i % 10 == 0:
+            print(f'Commento numero {i}')
         prompt_user = f"Classifica il seguente commento: {el['input ai']}"
         
         message_user = {"role": "user", "content": prompt_user}
@@ -375,7 +373,7 @@ def generate_responses(df_in):
 
         df_final = pd.concat([df_final, df])
             
-        message_array.pop(1)
+        # message_array.pop(1)
         
     df_final.reset_index(drop=True, inplace=True)
 

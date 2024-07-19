@@ -3,8 +3,8 @@ from utils import *
 
 pd.options.mode.copy_on_write = True
 
-start_date = "2024-07-01T00:00:00"
-end_date = "2024-07-01T23:59:59"
+start_date = "2024-07-02T00:00:00"
+end_date = "2024-07-02T23:59:59"
 
 ########### INSTAGRAM ###########
 
