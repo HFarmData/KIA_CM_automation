@@ -4,15 +4,15 @@ from utils import *
 pd.options.mode.copy_on_write = True
 pd.options.mode.chained_assignment = None  # default='warn'
 
-start_date = "2024-07-09T00:00:00"
-end_date = "2024-07-09T23:59:59"
+start_date = "2024-07-18T00:00:00"
+end_date = "2024-07-18T23:59:59"
 
 ########### INSTAGRAM ###########
 
 ### COMMUNITY INSTAGRAM ###
 print('---Getting data from Emplifi for Instagram Community---')
 ig_community = get_data(date_start=start_date, date_end=end_date, platform='instagram')
-print('Retrieving data from Emplifi for Instagram Community completed')
+print(f'Retrieving data from Emplifi for Instagram Community completed, there are {len(ig_community)} comments')
 
 ### DATA PRE-PROCESSING ###
 ig_community.fillna('VUOTO', inplace=True)
@@ -30,7 +30,7 @@ print(community_ig.head())
 ### COMMUNITY FACEBOOK ###
 print('---Getting data from Emplifi for Facebook Community---')
 fb_community = get_data(date_start=start_date, date_end=end_date, platform='facebook')
-print('Retrieving data from Emplifi for Facebook Community completed')
+print(f'Retrieving data from Emplifi for Facebook Community completed, there are {len(fb_community)} comments')
 
 ### DATA PRE-PROCESSING ###
 fb_community.fillna('VUOTO', inplace=True)
