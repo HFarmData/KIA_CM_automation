@@ -4,8 +4,8 @@ from utils import *
 pd.options.mode.copy_on_write = True
 pd.options.mode.chained_assignment = None  # default='warn'
 
-start_date = "2024-07-22T00:00:00"
-end_date = "2024-07-22T23:59:59"
+start_date = "2024-07-24T00:00:00"
+end_date = "2024-07-24T23:59:59"
 
 ########### INSTAGRAM ###########
 
