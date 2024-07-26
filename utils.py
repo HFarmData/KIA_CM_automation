@@ -399,6 +399,17 @@ def check_run(client, thread_id, run_id):
         else:
             time.sleep(0.5)
 
+def clear_thread(client, thread_id):
+    output = []
+    messages = client.beta.threads.messages.list(thread_id)
+    for i in range(len(messages.data)):
+        deleted_message = client.beta.threads.messages.delete(
+            message_id=messages.data[i].id,
+            thread_id=thread_id,
+        )
+        output.append(deleted_message.deleted)
+    return all(i == output[0] for i in output)
+
 def proposta_risposta(df):
     client = OpenAI(api_key=os.environ['OPENAI_KEY'])
     for i, el in df.iterrows():
@@ -416,6 +427,12 @@ def proposta_risposta(df):
         messages = client.beta.threads.messages.list(run.thread_id)
 
         df.at[i, "PROPOSTA RISP JAKALA"] = messages.data[0].content[0].text.value
+
+        if i % 10 == 0:
+            print("Log pulizia thread ogni tot")
+            clear_thread(client, run.thread_id)
+        else:
+            clear_thread(client, run.thread_id)
 
     return df
 

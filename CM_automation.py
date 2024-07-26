@@ -56,8 +56,6 @@ print(f"Total tokens for Instagram Community {total_token}")
 
 community_ig = generate_responses(community_ig)
 
-# community_ig.iloc[:,:-2].to_excel(f"out/Instagram/ig_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
-
 print('Final Dataset of Instagram Community')
 print(community_ig.head())
 
@@ -71,7 +69,6 @@ print(f"Total tokens for Facebook Community {total_token}")
 
 community_fb = generate_responses(community_fb)
 
-# community_fb.iloc[:,:-2].to_excel(f"out/Facebook/fb_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
 print('Final Dataset of Facebook Community')
 print(community_fb.head())
 
