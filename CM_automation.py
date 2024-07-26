@@ -4,8 +4,8 @@ from utils import *
 pd.options.mode.copy_on_write = True
 pd.options.mode.chained_assignment = None  # default='warn'
 
-start_date = "2024-07-24T00:00:00"
-end_date = "2024-07-24T23:59:59"
+start_date = "2024-07-25T00:00:00"
+end_date = "2024-07-25T23:59:59"
 
 ########### INSTAGRAM ###########
 
@@ -56,7 +56,7 @@ print(f"Total tokens for Instagram Community {total_token}")
 
 community_ig = generate_responses(community_ig)
 
-community_ig.iloc[:,:-2].to_excel(f"out/Instagram/ig_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
+# community_ig.iloc[:,:-2].to_excel(f"out/Instagram/ig_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
 
 print('Final Dataset of Instagram Community')
 print(community_ig.head())
@@ -71,6 +71,19 @@ print(f"Total tokens for Facebook Community {total_token}")
 
 community_fb = generate_responses(community_fb)
 
-community_fb.iloc[:,:-2].to_excel(f"out/Facebook/fb_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
+# community_fb.iloc[:,:-2].to_excel(f"out/Facebook/fb_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
 print('Final Dataset of Facebook Community')
 print(community_fb.head())
+
+#### CREAZIONE RISPOSTA ####
+print("---Creazione risposte Community IG tramite Assistant")
+community_ig = proposta_risposta(community_ig)
+community_ig.iloc[:,:-2].to_excel(f"out/Instagram/ig_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
+
+print("---Creazione risposte Community FB tramite Assistant")
+community_fb = proposta_risposta(community_fb)
+community_ig.iloc[:,:-2].to_excel(f"out/Instagram/ig_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
+
+print("PROCESSO TERMINATO")
+
+

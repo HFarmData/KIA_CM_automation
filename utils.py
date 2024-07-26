@@ -2,9 +2,11 @@ import requests, json, os
 import pandas as pd
 from dotenv import load_dotenv
 import openai
+from openai import OpenAI
 import tiktoken
 import re
 from datetime import datetime
+import time
 
 load_dotenv()
 
@@ -384,3 +386,36 @@ def generate_responses(df_in):
     df_in['SENTIMENT'] = df_final['Sentiment']
 
     return df_in
+
+def check_run(client, thread_id, run_id):
+    while True:
+        run = client.beta.threads.runs.retrieve(
+                thread_id=thread_id,
+                run_id=run_id
+                )
+        if (run.status == "completed") or (run.status == "expired"):
+            print("Risposta generata")
+            break
+        else:
+            time.sleep(0.5)
+
+def proposta_risposta(df):
+    client = OpenAI(api_key=os.environ['OPENAI_KEY'])
+    for i, el in df.iterrows():
+        content = f"Rispondi a questo commento {el['input ai']}"
+        run = client.beta.threads.create_and_run(
+            assistant_id="asst_tTuUwYN6nt9j1GSMHV9bIKpb",
+            thread={
+                "messages": [
+                    {"role": "user", "content": content}
+                ]
+            }
+        )
+        check_run(client, run.thread_id, run.id)
+
+        messages = client.beta.threads.messages.list(run.thread_id)
+
+        df.at[i, "PROPOSTA RISP JAKALA"] = messages.data[0].content[0].text.value
+
+    return df
+
