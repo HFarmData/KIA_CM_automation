@@ -394,7 +394,6 @@ def check_run(client, thread_id, run_id):
                 run_id=run_id
                 )
         if (run.status == "completed") or (run.status == "expired"):
-            print("Risposta generata")
             break
         else:
             time.sleep(0.5)
