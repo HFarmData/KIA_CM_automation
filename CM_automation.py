@@ -74,12 +74,12 @@ print(community_fb.head())
 
 #### CREAZIONE RISPOSTA ####
 print("---Creazione risposte Community IG tramite Assistant")
-community_ig = proposta_risposta(community_ig)
-community_ig.iloc[:,:-2].to_excel(f"out/Instagram/ig_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
+"""community_ig = proposta_risposta(community_ig)
+community_ig.iloc[:,:-2].to_excel(f"out/Instagram/ig_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)"""
 
 print("---Creazione risposte Community FB tramite Assistant")
 community_fb = proposta_risposta(community_fb)
-community_ig.iloc[:,:-2].to_excel(f"out/Instagram/ig_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
+community_fb.iloc[:,:-2].to_excel(f"out/Facebook/fb_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
 
 print("PROCESSO TERMINATO")
 

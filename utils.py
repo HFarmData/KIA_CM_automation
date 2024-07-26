@@ -409,6 +409,10 @@ def clear_thread(client, thread_id):
         output.append(deleted_message.deleted)
     return all(i == output[0] for i in output)
 
+def remove_source_annotations(answer):
+    pattern = r'【\d+(:?\d+)?†source】'
+    return re.sub(pattern, '', answer)
+
 def proposta_risposta(df):
     client = OpenAI(api_key=os.environ['OPENAI_KEY'])
     for i, el in df.iterrows():
@@ -425,8 +429,11 @@ def proposta_risposta(df):
 
         messages = client.beta.threads.messages.list(run.thread_id)
 
-        df.at[i, "PROPOSTA RISP JAKALA"] = messages.data[0].content[0].text.value
+        risposta = messages.data[0].content[0].text.value
 
+        risposta = remove_source_annotations(risposta)
+
+        df.at[i, "PROPOSTA RISP JAKALA"] = risposta
         if i % 10 == 0:
             print("Log pulizia thread ogni tot")
             clear_thread(client, run.thread_id)
