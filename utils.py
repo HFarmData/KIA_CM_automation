@@ -211,8 +211,12 @@ def before_deadline(df_final, platform):
 
     for el in lista_utenti:
         subdf = chat_utenti[chat_utenti['NOME UTENTE'] == el]
-        subdf = subdf.sort_values(by=['DATA', 'ORA'])
+        subdf.sort_values(by=['DATA', 'ORA'], inplace=True)
+        subdf.reset_index(drop=True, inplace=True)
+        if len(subdf) == 2 and subdf.at[0, 'ORA'] == subdf.at[1, 'ORA']:
+            subdf = subdf.reindex([1,0]) 
         community = pd.concat([community, subdf], axis=0)
+
     community.reset_index(drop=True, inplace=True)
 
     temp = pd.DataFrame(columns=community.columns)
@@ -221,14 +225,18 @@ def before_deadline(df_final, platform):
         subdf['DATETIME'] = subdf['DATA'] + ' ' + subdf['ORA']
         subdf.reset_index(drop=True, inplace=True)
         if len(subdf) == 1:
-            community[community['NOME UTENTE'] == el]['BEFORE DEADLINE'] = 'No'
+            community['BEFORE DEADLINE'] = 'No'
             temp = pd.concat([temp, subdf], axis=0)
         else:
             for i, el in subdf.iterrows():
                 if el['PROVENIENZA'] == 'utente':
                     for j, el2 in subdf.iloc[i+1:,:].iterrows():
                         if el2['PROVENIENZA'] == 'Kia':
-                            differenza_ore = (datetime.strptime(el2['DATETIME'], "%Y-%m-%d %H:%M:%S") - datetime.strptime(el['DATETIME'], "%Y-%m-%d %H:%M:%S")).total_seconds() / 3600
+                            data2 = datetime.strptime(el2['DATETIME'], "%Y-%m-%d %H:%M:%S")
+                            data = datetime.strptime(el['DATETIME'], "%Y-%m-%d %H:%M:%S")  
+                            print(data2, data)                      
+                            differenza_ore =  (data2 - data).total_seconds() / 3600
+                            print(differenza_ore)
                             if differenza_ore <= 2:
                                 subdf.at[i, 'BEFORE DEADLINE'] = 'Si'
             temp = pd.concat([temp, subdf], axis=0)
