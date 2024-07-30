@@ -233,10 +233,8 @@ def before_deadline(df_final, platform):
                     for j, el2 in subdf.iloc[i+1:,:].iterrows():
                         if el2['PROVENIENZA'] == 'Kia':
                             data2 = datetime.strptime(el2['DATETIME'], "%Y-%m-%d %H:%M:%S")
-                            data = datetime.strptime(el['DATETIME'], "%Y-%m-%d %H:%M:%S")  
-                            print(data2, data)                      
+                            data = datetime.strptime(el['DATETIME'], "%Y-%m-%d %H:%M:%S")                      
                             differenza_ore =  (data2 - data).total_seconds() / 3600
-                            print(differenza_ore)
                             if differenza_ore <= 2:
                                 subdf.at[i, 'BEFORE DEADLINE'] = 'Si'
             temp = pd.concat([temp, subdf], axis=0)
