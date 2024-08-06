@@ -152,7 +152,7 @@ def create_conversations(df, platform, start_date, end_date):
                             provenienza.append('Kia')
                         else:
                             provenienza.append('utente')
-        if el['message'] != 'VUOTO':
+        elif el['message'] != 'VUOTO':
             messaggi.append(el['message'])
             data.append(el['created_time'].split('T')[0])
             ora.append(el['created_time'].split('T')[1].split('+')[0])

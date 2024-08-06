@@ -4,8 +4,8 @@ from utils import *
 pd.options.mode.copy_on_write = True
 pd.options.mode.chained_assignment = None  # default='warn'
 
-start_date = "2024-07-29T17:00:00"
-end_date = "2024-07-29T23:59:59"
+start_date = "2024-07-31T00:00:00"
+end_date = "2024-08-05T23:59:59"
 
 ########### INSTAGRAM ###########
 
@@ -13,6 +13,7 @@ end_date = "2024-07-29T23:59:59"
 print('---Getting data from Emplifi for Instagram Community---')
 ig_community = get_data(date_start=start_date, date_end=end_date, platform='instagram')
 print(f'Retrieving data from Emplifi for Instagram Community completed, there are {len(ig_community)} comments')
+
 
 ### DATA PRE-PROCESSING ###
 ig_community.fillna('VUOTO', inplace=True)
@@ -73,13 +74,13 @@ print('Final Dataset of Facebook Community')
 print(community_fb.head())
 
 #### CREAZIONE RISPOSTA ####
-# print("---Creazione risposte Community IG tramite Assistant")
-# community_ig = proposta_risposta(community_ig)
-community_ig.iloc[:,:-2].to_excel(f"out/Instagram/ig_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
+print("---Creazione risposte Community IG tramite Assistant")
+community_ig = proposta_risposta(community_ig)
+community_ig.iloc[:,:-2].to_excel(f"out/Instagram/ig_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}_2.xlsx", index=None)
 
-# print("---Creazione risposte Community FB tramite Assistant")
-# community_fb = proposta_risposta(community_fb)
-community_fb.iloc[:,:-2].to_excel(f"out/Facebook/fb_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}.xlsx", index=None)
+print("---Creazione risposte Community FB tramite Assistant")
+community_fb = proposta_risposta(community_fb)
+community_fb.iloc[:,:-2].to_excel(f"out/Facebook/fb_community_{start_date.split('T')[0]}_{end_date.split('T')[0]}_2.xlsx", index=None)
 
 print("PROCESSO TERMINATO")
 
